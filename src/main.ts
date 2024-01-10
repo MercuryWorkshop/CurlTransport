@@ -1,14 +1,29 @@
 import { setBareClientImplementation, Client, BareHeaders, BareResponse, GetRequestHeadersCallback, MetaCallback, ReadyStateCallback, WebSocketImpl } from "@mercuryworkshop/bare-client-custom";
-import { libcurl } from "../libcurl.js/client/out/libcurl.js";
+// import { libcurl } from "../libcurl.js/client/out/libcurl.js";
 
 export class TLSClient extends Client {
   queue: (() => void)[] = [];
   canstart = true;
-  libcurlimpl = libcurl;
+  // libcurlimpl = libcurl;
+  mux;
+  wsproxy;
+  tcp;
 
-  constructor(wsproxy) {
-    libcurl.set_websocket(wsproxy);
+
+  constructor({ wsproxy, mux }) {
     super();
+    if (wsproxy) {
+      libcurl.set_websocket(wsproxy);
+      this.wsproxy = wsproxy;
+    } else if (mux) {
+      this.mux = mux;
+      declare var wasm_bindgen: any;
+      wasm_bindgen("./wstcp_client_bg.wasm").then(async () => {
+        let tcp = await new wasm_bindgen.WsTcpWorker(mux, navigator.userAgent);
+        window.tcp = tcp;
+        this.tcp = tcp;
+      });
+    }
   }
 
   async request(
@@ -21,15 +36,47 @@ export class TLSClient extends Client {
     signal: AbortSignal | undefined,
     arrayBufferImpl: ArrayBufferConstructor
   ): Promise<BareResponse> {
-    return new Promise((resolve, reject) => {
-      let cb = () => {
-        this.canstart = false;
-        libcurl.fetch(remote.href, {
-          method,
-          headers: requestHeaders,
-          body,
-          redirect: "manual",
-        }).then(payload => {
+
+    if (this.wsproxy) {
+
+      return new Promise((resolve, reject) => {
+        let cb = () => {
+          this.canstart = false;
+          libcurl.fetch(remote.href, {
+            method,
+            headers: requestHeaders,
+            body,
+            redirect: "manual",
+          }).then(payload => {
+
+            // the vk6headers are weird
+            const headers = new Headers();
+            for (const [header, value] of Object.entries(payload.headers)) {
+              headers.append(header, value);
+            }
+
+            resolve(new Response(payload.body, {
+              status: payload.status,
+              statusText: payload.statusText,
+              headers,
+            }) as BareResponse);
+            // setTimeout(() => {
+            console.log("poppin!");
+            this.canstart = true;
+            this.queue.pop()!();
+            // }, 1000);
+          }).catch(err => {
+            this.canstart = true;
+            this.queue.pop()!();
+            reject(err);
+          });
+        };
+
+        this.queue.push(cb);
+        if (this.canstart)
+          this.queue.pop()!();
+
+        setTimeout(() => {
 
           // the vk6headers are weird
           const headers = new Headers();
@@ -42,26 +89,22 @@ export class TLSClient extends Client {
             statusText: payload.statusText,
             headers,
           }) as BareResponse);
-          // setTimeout(() => {
-          console.log("poppin!");
-          this.canstart = true;
-          this.queue.pop()!();
-          // }, 1000);
-        }).catch(err => {
-          this.canstart = true;
-          this.queue.pop()!();
-          reject(err);
         });
-      };
-
-      this.queue.push(cb);
-      if (this.canstart)
-        this.queue.pop()!();
-
-      setTimeout(() => {
-
       });
-    });
+    } else {
+      let payload = await this.tcp.fetch(remote.href, { method, body, requestHeaders });
+
+      const headers = new Headers();
+      for (const [header, value] of payload.headers) {
+        headers.append(header, value);
+      }
+
+      return new Response(payload.body, {
+        status: payload.status,
+        statusText: payload.statusText,
+        headers,
+      }) as BareResponse;
+    }
   }
 
   connect(

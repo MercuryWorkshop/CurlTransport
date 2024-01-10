@@ -1,0 +1,3 @@
+[submodule "wstcp"]
+	path = wstcp
+	url = https://github.com/MercuryWorkshop/wstcp
