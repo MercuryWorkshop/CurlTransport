@@ -1,0 +1,32 @@
+{
+  "name": "bcc-tls",
+  "version": "1.0.0",
+  "description": "a bare-client-custom implenation of TLS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL",
+  "dependencies": {
+    "@mercuryworkshop/bare-client-custom": "2.2.0-alpha"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.11",
+    "esbuild-plugin-d.ts": "^1.2.2"
+  },
+  "exports": {
+    ".": {
+      "browser": {
+        "import":"./dist/index.mjs",
+        "require":"./dist/index.cjs"
+      },
+      "node": {
+        "import":"./dist/index.mjs",
+        "require":"./dist/index.cjs"
+      }
+    },
+    "types":"./AliceJS.d.ts"
+  }
+}
