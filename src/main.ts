@@ -2,11 +2,13 @@ import { setBareClientImplementation, Client, BareHeaders, BareResponse, GetRequ
 import { libcurl } from "../libcurl.js/client/out/libcurl.js";
 
 export class TLSClient extends Client {
+  queue: (() => void)[] = [];
+  canstart = true;
+  libcurlimpl = libcurl;
 
   constructor(wsproxy) {
     libcurl.set_websocket(wsproxy);
     super();
-    this.libcurlimpl = libcurl;
   }
 
   async request(
@@ -19,25 +21,47 @@ export class TLSClient extends Client {
     signal: AbortSignal | undefined,
     arrayBufferImpl: ArrayBufferConstructor
   ): Promise<BareResponse> {
-    let payload = await libcurl.fetch(remote.href, {
-      method,
-      headers: requestHeaders,
-      body,
-      redirect: "manual",
+    return new Promise((resolve, reject) => {
+      let cb = () => {
+        this.canstart = false;
+        libcurl.fetch(remote.href, {
+          method,
+          headers: requestHeaders,
+          body,
+          redirect: "manual",
+        }).then(payload => {
+
+          // the vk6headers are weird
+          const headers = new Headers();
+          for (const [header, value] of Object.entries(payload.headers)) {
+            headers.append(header, value);
+          }
+
+          resolve(new Response(payload.body, {
+            status: payload.status,
+            statusText: payload.statusText,
+            headers,
+          }) as BareResponse);
+          // setTimeout(() => {
+          console.log("poppin!");
+          this.canstart = true;
+          this.queue.pop()!();
+          // }, 1000);
+        }).catch(err => {
+          this.canstart = true;
+          this.queue.pop()!();
+          reject(err);
+        });
+      };
+
+      this.queue.push(cb);
+      if (this.canstart)
+        this.queue.pop()!();
+
+      setTimeout(() => {
+
+      });
     });
-
-
-    // the vk6headers are weird
-    const headers = new Headers();
-    for (const [header, value] of Object.entries(payload.headers)) {
-      headers.append(header, value);
-    }
-
-    return new Response(payload.body, {
-      status: payload.status,
-      statusText: payload.statusText,
-      headers,
-    }) as BareResponse;
   }
 
   connect(
