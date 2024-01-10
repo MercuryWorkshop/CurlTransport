@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@mercuryworkshop/bare-client-custom':
-    specifier: 2.2.0-alpha
-    version: 2.2.0-alpha
+    specifier: 2.2.1-alpha
+    version: 2.2.1-alpha
 
 devDependencies:
   esbuild:
@@ -226,8 +226,8 @@ packages:
     dev: true
     optional: true
 
-  /@mercuryworkshop/bare-client-custom@2.2.0-alpha:
-    resolution: {integrity: sha512-kiics0zOufZkchple/5U1kupwMoVttiSWJXlDLSr4zHk1JEd83uuZaITDHWwwrlbgfxPdX1PRi9HYu8tZHZAjQ==}
+  /@mercuryworkshop/bare-client-custom@2.2.1-alpha:
+    resolution: {integrity: sha512-JpHbstlMm/JfIyp7K4fOI3hb/6o5hEFyoNsx1FJus6sJ1smwSrn1PCIV0PJWMS7S7WhC0Y4WDZmPcRxYl/wwyQ==}
     dependencies:
       '@types/uuid': 9.0.7
       uuid: 9.0.1
