@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@mercuryworkshop/bare-client-custom':
-    specifier: 2.2.1-alpha
-    version: 2.2.1-alpha
+    specifier: link:/home/ce/Documents/GitHub/adrift/bare-client-custom
+    version: link:../adrift/bare-client-custom
 
 devDependencies:
   esbuild:
@@ -226,17 +226,6 @@ packages:
     dev: true
     optional: true
 
-  /@mercuryworkshop/bare-client-custom@2.2.1-alpha:
-    resolution: {integrity: sha512-JpHbstlMm/JfIyp7K4fOI3hb/6o5hEFyoNsx1FJus6sJ1smwSrn1PCIV0PJWMS7S7WhC0Y4WDZmPcRxYl/wwyQ==}
-    dependencies:
-      '@types/uuid': 9.0.7
-      uuid: 9.0.1
-    dev: false
-
-  /@types/uuid@9.0.7:
-    resolution: {integrity: sha512-WUtIVRUZ9i5dYXefDEAI7sh9/O7jGvHg7Df/5O/gtH3Yabe5odI3UWopVR1qbPXQtvOxWu3mM4XxlYeZtMWF4g==}
-    dev: false
-
   /ansi-styles@4.3.0:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
     engines: {node: '>=8'}
@@ -326,8 +315,3 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
-
-  /uuid@9.0.1:
-    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
-    hasBin: true
-    dev: false

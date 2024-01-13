@@ -10,7 +10,7 @@
   "author": "",
   "license": "GPL",
   "dependencies": {
-    "@mercuryworkshop/bare-client-custom": "2.2.1-alpha"
+    "@mercuryworkshop/bare-client-custom": "link:/home/ce/Documents/GitHub/adrift/bare-client-custom"
   },
   "devDependencies": {
     "esbuild": "^0.19.11",
