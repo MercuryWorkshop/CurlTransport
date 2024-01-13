@@ -90,6 +90,8 @@ export class TLSClient extends Client {
         });
       });
     } else {
+      if (body instanceof Blob)
+        body = await body.arrayBuffer();
       console.log(remote.href, { method, body, headers: requestHeaders });
       let payload = await this.tcp.fetch(remote.href, { method, body, headers: requestHeaders });
       console.log(payload);
