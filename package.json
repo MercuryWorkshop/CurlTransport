@@ -10,7 +10,8 @@
   "author": "",
   "license": "GPL",
   "dependencies": {
-    "@mercuryworkshop/bare-client-custom": "link:/home/ce/Documents/GitHub/adrift/bare-client-custom"
+    "@mercuryworkshop/bare-client-custom": "link:/home/ce/Documents/GitHub/adrift/bare-client-custom",
+    "binaryen": "^116.0.0"
   },
   "devDependencies": {
     "esbuild": "^0.19.11",
@@ -19,14 +20,14 @@
   "exports": {
     ".": {
       "browser": {
-        "import":"./dist/index.mjs",
-        "require":"./dist/index.cjs"
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
       },
       "node": {
-        "import":"./dist/index.mjs",
-        "require":"./dist/index.cjs"
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
       }
     },
-    "types":"./AliceJS.d.ts"
+    "types": "./AliceJS.d.ts"
   }
 }

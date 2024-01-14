@@ -8,6 +8,9 @@ dependencies:
   '@mercuryworkshop/bare-client-custom':
     specifier: link:/home/ce/Documents/GitHub/adrift/bare-client-custom
     version: link:../adrift/bare-client-custom
+  binaryen:
+    specifier: ^116.0.0
+    version: 116.0.0
 
 devDependencies:
   esbuild:
@@ -232,6 +235,11 @@ packages:
     dependencies:
       color-convert: 2.0.1
     dev: true
+
+  /binaryen@116.0.0:
+    resolution: {integrity: sha512-Hp0dXC6Cb/rTwWEoUS2BRghObE7g/S9umKtxuTDt3f61G6fNTE/YVew/ezyy3IdHcLx3f17qfh6LwETgCfvWkQ==}
+    hasBin: true
+    dev: false
 
   /chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}

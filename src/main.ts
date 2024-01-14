@@ -1,6 +1,7 @@
 import { setBareClientImplementation, Client, BareHeaders, BareResponse, GetRequestHeadersCallback, MetaCallback, ReadyStateCallback, WebSocketImpl } from "@mercuryworkshop/bare-client-custom";
 // import { libcurl } from "../libcurl.js/client/out/libcurl.js";
 
+declare var wasm_bindgen: any;
 export class TLSClient extends Client {
   queue: (() => void)[] = [];
   canstart = true;
@@ -17,7 +18,6 @@ export class TLSClient extends Client {
       this.wsproxy = wsproxy;
     } else if (mux) {
       this.mux = mux;
-      declare var wasm_bindgen: any;
       wasm_bindgen("./wstcp_client_bg.wasm").then(async () => {
         let tcp = await new wasm_bindgen.WsTcp(mux, navigator.userAgent, 10);
         window.tcp = tcp;
@@ -119,7 +119,8 @@ export class TLSClient extends Client {
     arrayBufferImpl: ArrayBufferConstructor
   ): WebSocket {
     console.log(arguments);
-    const ws = new webSocketImpl("wss:null", protocols);
+    const ws = new WebSocket("wss:null", protocols);
+    remote.protocol = remote.protocol === "ws:" ? "http:" : "https:";
     // this will error. that's okay
     let initalCloseHappened = false;
     ws.addEventListener("close", (e) => {
@@ -142,6 +143,56 @@ export class TLSClient extends Client {
 
     // coerce iframe Array type to our window array type
     protocols = Array.from(protocols);
+
+    let wsws = new wasm_bindgen.WsWebSocket(
+      (protocol: string) => {
+        onReadyState(WebSocket.OPEN);
+        (ws as any).__defineGetter__("protocol", () => { return protocol });
+        ws.dispatchEvent(new Event("open"));
+      },
+      (code: number, reason: string, wasClean: boolean) => {
+        onReadyState(WebSocket.CLOSED);
+        ws.dispatchEvent(new CloseEvent("close", { code, reason, wasClean }));
+      },
+      async (payload: Uint8Array | string) => {
+        if (typeof payload === "string") {
+          ws.dispatchEvent(new MessageEvent("message", { data: payload }));
+        } else {
+          let data = payload.buffer;
+          (data as any).__proto__ = arrayBufferImpl.prototype;
+
+          ws.dispatchEvent(new MessageEvent("message", { data }));
+        }
+
+      },
+      (message: string) => {
+        console.log({ message });
+        ws.dispatchEvent(new ErrorEvent("error", { message }));
+      },
+    );
+    // let host = "remote-auth-gateway.discord.gg";
+    let origin = arrayBufferImpl.prototype.constructor.constructor("return __uv$location")().origin;
+    let _ptr = wsws.ptr();
+    setTimeout(() => {
+
+      wsws.connect(this.tcp, remote.href, protocols, origin).then(() => {
+        setTimeout(() => {
+          // i dont know anymore
+          wsws.recv();
+
+        }, 2000);
+      });
+    }, 2000);
+
+    ws.send = (data: any) => {
+
+      setTimeout(() => {
+        wasm_bindgen.send(_ptr, data);
+      }, 2100);
+    };
+
+
+
     //   let { send, close } = this.connection.wsconnect(
     //     remote,
     //     protocols,
@@ -177,14 +228,10 @@ export class TLSClient extends Client {
     //     arrayBufferImpl.prototype.constructor.constructor("return __uv$location")().origin,
     // //   );
 
-    //   ws.send = (data: any) => {
-    //     send(data);
-    //   };
-
-    //   ws.close = (code?: number, reason?: string) => {
-    //     close(code, reason);
-    //     onReadyState(WebSocket.CLOSING);
-    //   };
+    // ws.close = (code?: number, reason?: string) => {
+    //   close(code, reason);
+    //   onReadyState(WebSocket.CLOSING);
+    // };
 
     return ws;
   }
