@@ -92,10 +92,14 @@ export class TLSClient extends Client {
     } else {
       if (body instanceof Blob)
         body = await body.arrayBuffer();
-      console.log(remote.href, { method, body, headers: requestHeaders });
-      let payload = await this.tcp.fetch(remote.href, { method, body, headers: requestHeaders });
-      console.log(payload);
-      return payload as BareResponse;
+      try {
+        let payload: BareResponse = await this.tcp.fetch(remote.href, { method, body, headers: requestHeaders, redirect: "manual" });
+        console.log(remote.href, { method, body, headers: requestHeaders });
+        console.log(payload);
+        return payload as BareResponse;
+      } catch (e) {
+        return new Response() as BareResponse;
+      }
 
       // return new Response(payload.body, {
       //   status: payload.status,
