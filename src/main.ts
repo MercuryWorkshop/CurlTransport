@@ -94,8 +94,8 @@ export class TLSClient extends Client {
         body = await body.arrayBuffer();
       try {
         let payload: BareResponse = await this.epxclient.fetch(remote.href, { method, body, headers: requestHeaders, redirect: "manual" });
-        console.log(remote.href, { method, body, headers: requestHeaders });
-        console.log(payload);
+        // console.log(remote.href, { method, body, headers: requestHeaders });
+        // console.log(payload);
         return payload as BareResponse;
       } catch (e) {
         return new Response() as BareResponse;
@@ -140,7 +140,6 @@ export class TLSClient extends Client {
 
 
     let origin = arrayBufferImpl.prototype.constructor.constructor("return __uv$location")().origin;
-    remote.protocol = remote.protocol === "ws:" ? "http:" : "https:";
 
     let wsws = this.epxclient.connect_ws(
       (protocol: string) => {
