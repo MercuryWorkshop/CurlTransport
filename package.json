@@ -11,7 +11,7 @@
   "license": "GPL",
   "dependencies": {
     "@mercuryworkshop/bare-client-custom": "link:/home/ce/Documents/GitHub/adrift/bare-client-custom",
-    "binaryen": "^116.0.0"
+    "@mercuryworkshop/epoxy-tls": "link:wstcp"
   },
   "devDependencies": {
     "esbuild": "^0.19.11",
