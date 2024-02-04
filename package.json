@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "description": "a bare-client-custom implenation of TLS",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "",
   "license": "GPL",
+  "scripts": {
+    "build": "esbuild src/main.ts --outdir=dist"
+  },
   "dependencies": {
-    "@mercuryworkshop/bare-client-custom": "link:/home/ce/Documents/GitHub/adrift/bare-client-custom",
-    "@mercuryworkshop/epoxy-tls": "link:wstcp"
+    "@mercuryworkshop/bare-client-custom": "file:bare-client-custom",
+    "@mercuryworkshop/epoxy-tls": "file:wstcp",
+    "libcurl.js": "^0.3.2",
+    "ws": "8.16.0"
   },
   "devDependencies": {
     "esbuild": "^0.19.11",

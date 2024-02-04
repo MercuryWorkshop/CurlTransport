@@ -6,11 +6,17 @@ settings:
 
 dependencies:
   '@mercuryworkshop/bare-client-custom':
-    specifier: link:/home/ce/Documents/GitHub/adrift/bare-client-custom
-    version: link:../adrift/bare-client-custom
+    specifier: file:bare-client-custom
+    version: file:bare-client-custom
   '@mercuryworkshop/epoxy-tls':
-    specifier: link:wstcp
-    version: link:wstcp
+    specifier: file:wstcp
+    version: file:wstcp
+  libcurl.js:
+    specifier: ^0.3.2
+    version: 0.3.2
+  ws:
+    specifier: 8.16.0
+    version: 8.16.0
 
 devDependencies:
   esbuild:
@@ -229,6 +235,14 @@ packages:
     dev: true
     optional: true
 
+  /@tomphttp/bare-client@2.2.0-alpha:
+    resolution: {integrity: sha512-xhcflOpwr92tkpp8SoDhB3nK3LHMBIjx+vgow37XobQew2k0/mXSxmaU7BsDFpOIa1CcLCEsR8gWn0v7Cy9+7Q==}
+    dev: false
+
+  /@types/uuid@9.0.8:
+    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
+    dev: false
+
   /ansi-styles@4.3.0:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
     engines: {node: '>=8'}
@@ -302,6 +316,10 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /libcurl.js@0.3.2:
+    resolution: {integrity: sha512-CPQM4kIriGhmAhSMV3T6EQvxAOtVkwc1X58qQoaqvW8eIpnDT//4KhkeMqz808hWegG6hBrBQ+57P9IdlbchrQ==}
+    dev: false
+
   /lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
@@ -318,3 +336,35 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
+
+  /uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    hasBin: true
+    dev: false
+
+  /ws@8.16.0:
+    resolution: {integrity: sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
+
+  file:bare-client-custom:
+    resolution: {directory: bare-client-custom, type: directory}
+    name: '@mercuryworkshop/bare-client-custom'
+    dependencies:
+      '@tomphttp/bare-client': 2.2.0-alpha
+      '@types/uuid': 9.0.8
+      uuid: 9.0.1
+    dev: false
+
+  file:wstcp:
+    resolution: {directory: wstcp, type: directory}
+    name: '@mercuryworkshop/epoxy-tls'
+    dev: false
