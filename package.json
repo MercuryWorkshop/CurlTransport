@@ -2,15 +2,16 @@
   "name": "bcc-tls",
   "version": "1.0.0",
   "description": "a bare-client-custom implenation of TLS",
-  "main": "index.js",
+  "main": "./dist/index.mjs",
   "keywords": [],
   "author": "",
+  "type": "module",
   "license": "GPL",
   "scripts": {
     "build": "esbuild src/main.ts --outdir=dist"
   },
   "dependencies": {
-    "@mercuryworkshop/bare-client-custom": "file:bare-client-custom",
+    "@mercuryworkshop/bare-client-custom": "^3.1.0",
     "@mercuryworkshop/epoxy-tls": "file:wstcp",
     "libcurl.js": "^0.3.2",
     "ws": "8.16.0"
@@ -29,7 +30,6 @@
         "import": "./dist/index.mjs",
         "require": "./dist/index.cjs"
       }
-    },
-    "types": "./AliceJS.d.ts"
+    }
   }
 }
