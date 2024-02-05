@@ -8,7 +8,7 @@
   "type": "module",
   "license": "GPL",
   "scripts": {
-    "build": "esbuild src/main.ts --outdir=dist"
+    "build": "node esbuild.bundle.mjs"
   },
   "dependencies": {
     "@mercuryworkshop/bare-client-custom": "^3.1.0",
