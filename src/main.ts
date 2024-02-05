@@ -95,6 +95,7 @@ export class TLSClient extends Client {
         wsws.onopen = (protocol: string) => {
           onReadyState(WebSocket.OPEN);
           (ws as any).__defineGetter__("protocol", () => { return protocol });
+          console.log("websocket binary type:" + ws.binaryType)
           Object.defineProperty(wsws, 'binaryType', {
             value: ws.binaryType,
             writable: false,
