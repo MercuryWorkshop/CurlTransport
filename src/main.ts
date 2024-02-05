@@ -91,7 +91,7 @@ export class TLSClient extends Client {
     protocols = Array.from(protocols);
     let origin = arrayBufferImpl.prototype.constructor.constructor("return __uv$location")().origin;  
     if (this.wsproxy) {  
-        let wsws = new libcurl.WebSocket(remote.toString(), protocols, true);
+        let wsws = new libcurl.WebSocket(remote.toString(), protocols);
         wsws.onopen = (protocol: string) => {
           onReadyState(WebSocket.OPEN);
           (ws as any).__defineGetter__("protocol", () => { return protocol });
@@ -120,6 +120,8 @@ export class TLSClient extends Client {
 
             ws.dispatchEvent(new MessageEvent("message", { data: payload }));
           } else if (payload instanceof Blob) {
+            console.log(payload)
+            console.log(event)
             ws.dispatchEvent(new MessageEvent("message", { data: payload }));
           }
         }

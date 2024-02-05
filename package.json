@@ -13,7 +13,7 @@
   "dependencies": {
     "@mercuryworkshop/bare-client-custom": "^3.1.0",
     "@mercuryworkshop/epoxy-tls": "file:wstcp",
-    "libcurl.js": "^0.3.2",
+    "libcurl.js": "^0.3.3",
     "ws": "8.16.0"
   },
   "devDependencies": {
