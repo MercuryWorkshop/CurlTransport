@@ -87,19 +87,22 @@ export class TLSClient extends Client {
       }
     });  
     type WebSocketData = string | ArrayBuffer | Blob;
+    
     // coerce iframe Array type to our window array type
     protocols = Array.from(protocols);
     let origin = arrayBufferImpl.prototype.constructor.constructor("return __uv$location")().origin;  
     if (this.wsproxy) {  
         let wsws = new libcurl.WebSocket(remote.toString(), protocols);
+        
         wsws.onopen = (protocol: string) => {
           onReadyState(WebSocket.OPEN);
           (ws as any).__defineGetter__("protocol", () => { return protocol });
-          console.log("websocket binary type:" + ws.binaryType)
           Object.defineProperty(wsws, 'binaryType', {
-            value: ws.binaryType,
-            writable: false,
+            get: function () {
+              return ws.binaryType;
+            },
           });
+          console.log(wsws)
           ws.dispatchEvent(new Event("open"));
         }
         //@ts-ignore
@@ -117,7 +120,7 @@ export class TLSClient extends Client {
           if (typeof payload === "string") {
             ws.dispatchEvent(new MessageEvent("message", { data: payload }));
           } else if (payload instanceof ArrayBuffer) {
-            (payload as any).__proto__ = arrayBufferImpl.prototype;
+            Object.setPrototypeOf(payload, arrayBufferImpl.prototype);
 
             ws.dispatchEvent(new MessageEvent("message", { data: payload }));
           } else if (payload instanceof Blob) {
@@ -153,7 +156,7 @@ export class TLSClient extends Client {
             ws.dispatchEvent(new MessageEvent("message", { data: payload }));
           } else {
             let data = payload.buffer;
-            (data as any).__proto__ = arrayBufferImpl.prototype;
+            Object.setPrototypeOf(data, arrayBufferImpl.prototype);
 
             ws.dispatchEvent(new MessageEvent("message", { data }));
           }
