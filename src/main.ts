@@ -154,13 +154,16 @@ export class TLSClient extends Client {
         async (payload: Uint8Array | string) => {
           if (typeof payload === "string") {
             ws.dispatchEvent(new MessageEvent("message", { data: payload }));
-          } else {
+          } else if (ws.binaryType == "arraybuffer") {
             let data = payload.buffer;
             Object.setPrototypeOf(data, arrayBufferImpl.prototype);
 
             ws.dispatchEvent(new MessageEvent("message", { data }));
-          }
+          } else if (ws.binaryType == "blob") {
+            let data = new Blob([payload])
 
+            ws.dispatchEvent(new MessageEvent("message", { data }));
+          }
         },
         remote.href,
         protocols,
