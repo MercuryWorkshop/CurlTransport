@@ -1,5 +1,5 @@
 {
-  "name": "bcc-tls",
+  "name": "@mercuryworkshop/bcc-tls",
   "version": "1.0.0",
   "description": "a bare-client-custom implenation of TLS",
   "main": "./dist/index.mjs",
@@ -14,6 +14,9 @@
     "@mercuryworkshop/bare-mux": "workspace:*",
     "@mercuryworkshop/epoxy-tls": "workspace:*",
     "libcurl.js": "^0.3.3",
+    "rollup": "^4.12.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.36.0",
     "ws": "8.16.0"
   },
   "devDependencies": {

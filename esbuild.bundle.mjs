@@ -72,15 +72,16 @@ build({
   plugins: [wasmPlugin],
   external: ["fs", "ws", "path"],
 })
-// build({
-//   bundle: true,
-//   format: "cjs",
-//   entryPoints: [`./src/main.ts`],
-//   outfile: `./dist/index.cjs`,
-//   external: ["fs", "ws", "path"],
-//   plugins: [wasmPlugin]
-//   // plugins: [dtsPlugin({
-//   //   outDir: `./dist/`,
-//   //   tsconfig: "tsconfig.json"
-//   // })]
-// })
+
+build({
+  bundle: true,
+  format: "cjs",
+  entryPoints: [`./src/main.ts`],
+  outfile: `./dist/index.cjs`,
+  external: ["fs", "ws", "path"],
+  plugins: [wasmPlugin]
+  // plugins: [dtsPlugin({
+  //   outDir: `./dist/`,
+  //   tsconfig: "tsconfig.json"
+  // })]
+})
