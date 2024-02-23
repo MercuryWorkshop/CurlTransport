@@ -11,8 +11,8 @@
     "build": "node esbuild.bundle.mjs"
   },
   "dependencies": {
-    "@mercuryworkshop/bare-client-custom": "^3.1.0",
-    "@mercuryworkshop/epoxy-tls": "file:wstcp",
+    "@mercuryworkshop/bare-mux": "workspace:*",
+    "@mercuryworkshop/epoxy-tls": "workspace:*",
     "libcurl.js": "^0.3.3",
     "ws": "8.16.0"
   },
