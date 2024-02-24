@@ -2,6 +2,13 @@
 import { build } from "esbuild";
 import path from 'node:path'
 import fs from 'node:fs'
+import { umdWrapper } from "esbuild-plugin-umd-wrapper";
+
+const umdWrapperOptions = {
+  libraryName: "BareTLS", // default is unset
+  external: "inherit", // <= default
+  amdLoaderName: "define" // <= default
+}
 
 let wasmPlugin = {
   name: 'wasm',
@@ -79,7 +86,7 @@ build({
   entryPoints: [`./src/main.ts`],
   outfile: `./dist/index.cjs`,
   external: ["fs", "ws", "path"],
-  plugins: [wasmPlugin]
+  plugins: [wasmPlugin, umdWrapper(umdWrapperOptions)]
   // plugins: [dtsPlugin({
   //   outDir: `./dist/`,
   //   tsconfig: "tsconfig.json"

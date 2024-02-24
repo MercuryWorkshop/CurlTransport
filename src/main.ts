@@ -1,8 +1,7 @@
 import { BareHeaders, BareResponse, TransferrableResponse, type BareTransport } from "@mercuryworkshop/bare-mux";
-import { libcurl } from "libcurl.js";
+// import { libcurl } from "libcurl.js";
 //@ts-ignore
-// import epoxy from "@mercuryworkshop/epoxy-tls";
-console.log(libcurl);
+import epoxy from "@mercuryworkshop/epoxy-tls";
 export class TLSClient implements BareTransport {
   canstart = true;
   epxclient: Awaited<ReturnType<any>>["EpoxyClient"]["prototype"] = null!;
@@ -16,8 +15,9 @@ export class TLSClient implements BareTransport {
       this.wsproxy = wsproxy
     } else if (mux) {
       (async () => {
-        // let { EpoxyClient } = await epoxy();
-        // this.epxclient = await new EpoxyClient(mux, navigator.userAgent, 10);
+        let { EpoxyClient } = await epoxy();
+        console.log(EpoxyClient);
+        this.epxclient = await new EpoxyClient(mux, navigator.userAgent, 10);
       })();
     }
   }
