@@ -41,6 +41,7 @@ export class TLSClient implements BareTransport {
         redirect: "manual",
       })
     } else {
+        try {
       if (body instanceof Blob)
         body = await body.arrayBuffer();
       let payload = await this.epxclient.fetch(remote.href, { method, body, headers, redirect: "manual" });
@@ -51,6 +52,7 @@ export class TLSClient implements BareTransport {
         status: payload.status,
         statusText: payload.statusText,
       };
+      } catch(e) {console.error(e)}
     }
   }
 
