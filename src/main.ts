@@ -114,7 +114,7 @@ export class TLSClient implements BareTransport {
         onopen,
         onclose,
         onerror,
-        onmessage,
+        (data: Uint8Array | string) => data instanceof Uint8Array ? onmessage(data.buffer) : onmessage(data),
         url.href,
         protocols,
         origin,
