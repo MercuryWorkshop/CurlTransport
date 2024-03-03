@@ -1,6 +1,6 @@
 import { BareHeaders, BareResponse, TransferrableResponse, type BareTransport } from "@mercuryworkshop/bare-mux";
 import epoxy from "@mercuryworkshop/epoxy-tls";
-export class TLSClient implements BareTransport {
+export class EpoxyClient implements BareTransport {
   canstart = true;
   epxclient: Awaited<ReturnType<any>>["EpoxyClient"]["prototype"] = null!;
   wisp: string;
