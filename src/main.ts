@@ -5,13 +5,14 @@ export class LibcurlClient implements BareTransport {
 
   constructor({ wisp }) {
     this.wisp = wisp;
-    libcurl.load_wasm("libcurl.wasm");
-    libcurl.set_websocket(wisp);
   }
+
+  ready = false;
   async init() {
+    libcurl.load_wasm("libcurl.wasm");
+    libcurl.set_websocket(this.wisp);
     this.ready = true;
   }
-  ready = true;
   async meta() { }
 
   async request(
