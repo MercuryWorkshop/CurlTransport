@@ -1,7 +1,7 @@
 {
-  "name": "@mercuryworkshop/epoxy-transport",
+  "name": "@mercuryworkshop/libcurl-transport",
   "version": "1.0.0",
-  "description": "a bare transport that implements end-to-end encryption with epoxy-tls and wisp",
+  "description": "a bare transport that implements end-to-end encryption with libcurl.js and wisp",
   "main": "./dist/index.mjs",
   "keywords": [],
   "author": "",
@@ -11,8 +11,8 @@
     "build": "node esbuild.bundle.mjs"
   },
   "dependencies": {
-    "@mercuryworkshop/epoxy-tls": "^1.1.1",
     "esbuild-plugin-umd-wrapper": "^2.0.0",
+    "libcurl.js": "^0.3.8",
     "rollup": "^4.12.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.36.0",

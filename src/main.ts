@@ -1,20 +1,17 @@
 import { BareHeaders, BareResponse, TransferrableResponse, type BareTransport } from "@mercuryworkshop/bare-mux";
-import epoxy from "@mercuryworkshop/epoxy-tls";
-export class EpoxyClient implements BareTransport {
-  canstart = true;
-  epxclient: Awaited<ReturnType<any>>["EpoxyClient"]["prototype"] = null!;
+import { libcurl } from "libcurl.js";
+export class LibcurlClient implements BareTransport {
   wisp: string;
 
   constructor({ wisp }) {
     this.wisp = wisp;
+    libcurl.load_wasm("libcurl.wasm");
+    libcurl.set_websocket(wisp);
   }
   async init() {
-    let { EpoxyClient } = await epoxy();
-    this.epxclient = await new EpoxyClient(this.wisp, navigator.userAgent, 10);
-
     this.ready = true;
   }
-  ready = false;
+  ready = true;
   async meta() { }
 
   async request(
@@ -24,16 +21,26 @@ export class EpoxyClient implements BareTransport {
     headers: BareHeaders,
     signal: AbortSignal | undefined
   ): Promise<TransferrableResponse> {
-    if (body instanceof Blob)
-      body = await body.arrayBuffer();
-    let payload = await this.epxclient.fetch(remote.href, { method, body, headers, redirect: "manual" });
+    let payload = await libcurl.fetch(remote.href, {
+      method,
+      headers: headers,
+      body,
+      redirect: "manual",
+    })
+
+    let respheaders = {};
+
+    for (const [key, value] of [...payload.headers]) {
+      respheaders[key] = value;
+    }
+
 
     return {
       body: payload.body!,
-      headers: (payload as any).rawHeaders,
+      headers: respheaders,
       status: payload.status,
       statusText: payload.statusText,
-    };
+    }
   }
 
   connect(
@@ -46,18 +53,21 @@ export class EpoxyClient implements BareTransport {
     onclose: (code: number, reason: string) => void,
     onerror: (error: string) => void,
   ): (data: Blob | ArrayBuffer | string) => void {
-    let epsocket = this.epxclient.connect_ws(
-      onopen,
-      onclose,
-      onerror,
-      (data: Uint8Array | string) => data instanceof Uint8Array ? onmessage(data.buffer) : onmessage(data),
-      url.href,
-      protocols,
-      origin,
-    );
+    let socket = new libcurl.WebSocket(url.toString(), protocols);
 
-    return async (data) => {
-      (await epsocket).send(data);
-    };
+    socket.onopen = onopen;
+    socket.onclose = onclose;
+    socket.onerror = onerror;
+
+    socket.onmessage = (event) => {
+      console.log(event);
+    }
+
+    // ws.close = () => {
+    //       socket.close();
+    //     }
+    return (data) => {
+      socket.send(data);
+    }
   }
 }

@@ -5,7 +5,7 @@ import fs from 'node:fs'
 import { umdWrapper } from "esbuild-plugin-umd-wrapper";
 
 const umdWrapperOptions = {
-  libraryName: "EpxMod", // default is unset
+  libraryName: "CurlMod", // default is unset
   external: "inherit", // <= default
   amdLoaderName: "define" // <= default
 }
