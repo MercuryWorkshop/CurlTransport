@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@mercuryworkshop/bare-mux": "workspace:*",
-    "@mercuryworkshop/epoxy-tls": "workspace:*",
+    "@mercuryworkshop/epoxy-tls": "^1.1.1",
     "esbuild-plugin-umd-wrapper": "^2.0.0",
     "libcurl.js": "^0.3.8",
     "rollup": "^4.12.0",
