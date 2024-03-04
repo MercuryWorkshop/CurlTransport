@@ -58,13 +58,10 @@ export class LibcurlClient implements BareTransport {
   ): (data: Blob | ArrayBuffer | string) => void {
     let socket = new libcurl.WebSocket(url.toString(), protocols);
 
-    socket.onopen = onopen;
-    socket.onclose = onclose;
-    socket.onerror = onerror;
-
-    socket.onmessage = (event) => {
-      console.log(event);
-    }
+    socket.onopen = (event: Event) => {onopen("")};
+    socket.onclose = (event: CloseEvent) => {onclose(event.code, event.reason)};
+    socket.onerror = (event: Event) => {onerror("")};
+    socket.onmessage = (event: MessageEvent) => {onmessage(event.data)};
 
     // ws.close = () => {
     //       socket.close();
