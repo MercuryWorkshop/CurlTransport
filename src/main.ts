@@ -5,14 +5,16 @@ export class LibcurlClient implements BareTransport {
 
   constructor({ wisp }) {
     this.wisp = wisp;
-  }
-
-  ready = false;
-  async init() {
     libcurl.load_wasm("libcurl.wasm");
-    libcurl.set_websocket(this.wisp);
-    this.ready = true;
+    libcurl.onload = () => {
+      libcurl.set_websocket(wisp);
+      this.ready = true;
+    }
   }
+  async init() {
+    this.ready = false;
+  }
+  ready = false;
   async meta() { }
 
   async request(
@@ -26,7 +28,7 @@ export class LibcurlClient implements BareTransport {
       method,
       headers: headers,
       body,
-      redirect: "manual",
+      redirect: "manual"
     })
 
     let respheaders = {};
