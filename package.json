@@ -22,6 +22,7 @@
     "esbuild": "^0.19.11",
     "esbuild-plugin-d.ts": "^1.2.2"
   },
+  "files": [ "dist", "lib" ],
   "exports": {
     ".": {
       "browser": {
@@ -29,8 +30,8 @@
         "require": "./dist/index.cjs"
       },
       "node": {
-        "import": "./dist/index.mjs",
-        "require": "./dist/index.cjs"
+        "import": "./lib/index.cjs",
+        "require": "./lib/index.cjs"
       }
     }
   }
