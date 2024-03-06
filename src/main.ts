@@ -5,14 +5,16 @@ export class LibcurlClient implements BareTransport {
 
   constructor({ wisp }) {
     this.wisp = wisp;
-    libcurl.load_wasm("libcurl.wasm");
-    libcurl.onload = () => {
-      libcurl.set_websocket(wisp);
-      this.ready = true;
-    }
   }
   async init() {
-    this.ready = false;
+    libcurl.load_wasm("libcurl.wasm");
+    await new Promise((resolve, reject) => {
+      libcurl.onload = () => {
+        libcurl.set_websocket(this.wisp);
+        this.ready = true;
+        resolve(null);
+      }
+    })
   }
   ready = false;
   async meta() { }
@@ -56,17 +58,24 @@ export class LibcurlClient implements BareTransport {
     onclose: (code: number, reason: string) => void,
     onerror: (error: string) => void,
   ): (data: Blob | ArrayBuffer | string) => void {
-    let socket = new libcurl.WebSocket(url.toString(), protocols);
+    let socket = new libcurl.WebSocket(url.toString(), protocols, true);
+    //bare client always expects an arraybuffer for some reason
+    socket.binaryType = "arraybuffer";
 
+    console.log(url);
     socket.onopen = (event: Event) => {onopen("")};
     socket.onclose = (event: CloseEvent) => {onclose(event.code, event.reason)};
     socket.onerror = (event: Event) => {onerror("")};
-    socket.onmessage = (event: MessageEvent) => {onmessage(event.data)};
+    socket.onmessage = (event: MessageEvent) => {
+      console.log("recv from " + url, event.data);
+      onmessage(event.data);
+    };
 
     // ws.close = () => {
     //       socket.close();
     //     }
     return (data) => {
+      console.log("send to " + url, data);
       socket.send(data);
     }
   }
