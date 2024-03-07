@@ -59,8 +59,7 @@ export class LibcurlClient implements BareTransport {
     onerror: (error: string) => void,
   ): (data: Blob | ArrayBuffer | string) => void {
     let socket = new libcurl.WebSocket(url.toString(), protocols, {
-      headers: requestHeaders,
-      verbose: 1
+      headers: requestHeaders
     });
     //bare client always expects an arraybuffer for some reason
     socket.binaryType = "arraybuffer";
@@ -70,13 +69,11 @@ export class LibcurlClient implements BareTransport {
     socket.onclose = (event: CloseEvent) => {onclose(event.code, event.reason)};
     socket.onerror = (event: Event) => {onerror("")};
     socket.onmessage = (event: MessageEvent) => {
-      console.log("recv from " + url, event.data);
       onmessage(event.data);
     };
 
     //there's no way to close the websocket in bare-mux?
     return (data) => {
-      console.log("send to " + url, data);
       socket.send(data);
     }
   }
