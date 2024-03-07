@@ -34,11 +34,14 @@ export class LibcurlClient implements BareTransport {
     })
 
     let respheaders = {};
-
-    for (const [key, value] of [...payload.headers]) {
-      respheaders[key] = value;
+    for (let [key, value] of payload.raw_headers) {
+      if (!respheaders[key]) {
+        respheaders[key] = [value];
+      }
+      else {
+        respheaders[key].push(value);
+      }
     }
-
 
     return {
       body: payload.body!,
