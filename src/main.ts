@@ -2,12 +2,14 @@ import { BareHeaders, BareResponse, TransferrableResponse, type BareTransport } 
 import { libcurl } from "libcurl.js";
 export class LibcurlClient implements BareTransport {
   wisp: string;
+  wasm_url: string;
 
-  constructor({ wisp }) {
-    this.wisp = wisp;
+  constructor(options) {
+    this.wisp = options.wisp;
+    this.wasm_url = options.wasm || "libcurl.wasm";
   }
   async init() {
-    libcurl.load_wasm("libcurl.wasm");
+    libcurl.load_wasm(this.wasm_url);
     await new Promise((resolve, reject) => {
       libcurl.onload = () => {
         libcurl.set_websocket(this.wisp);
