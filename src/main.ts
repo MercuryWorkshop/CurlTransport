@@ -9,6 +9,9 @@ export class LibcurlClient implements BareTransport {
     this.wasm_url = options.wasm || "libcurl.wasm";
   }
   async init() {
+    this.ready = libcurl.ready;
+    if (this.ready) return;
+
     libcurl.load_wasm(this.wasm_url);
     await new Promise((resolve, reject) => {
       libcurl.onload = () => {
@@ -16,7 +19,7 @@ export class LibcurlClient implements BareTransport {
         this.ready = true;
         resolve(null);
       }
-    })
+    });
   }
   ready = false;
   async meta() { }
@@ -69,7 +72,6 @@ export class LibcurlClient implements BareTransport {
     //bare client always expects an arraybuffer for some reason
     socket.binaryType = "arraybuffer";
 
-    //console.log(url);
     socket.onopen = (event: Event) => {onopen("")};
     socket.onclose = (event: CloseEvent) => {onclose(event.code, event.reason)};
     socket.onerror = (event: Event) => {onerror("")};
