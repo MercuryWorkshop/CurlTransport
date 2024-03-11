@@ -15,6 +15,7 @@ export class LibcurlClient implements BareTransport {
     libcurl.load_wasm(this.wasm_url);
     await new Promise((resolve, reject) => {
       libcurl.onload = () => {
+        console.log("loaded libcurl.js v"+libcurl.version.lib);
         libcurl.set_websocket(this.wisp);
         this.ready = true;
         resolve(null);
