@@ -92,3 +92,16 @@ build({
   //   tsconfig: "tsconfig.json"
   // })]
 })
+
+build({
+  bundle: true,
+  format: "js",
+  entryPoints: [`./src/main.ts`],
+  outfile: `./dist/index.js`,
+  external: ["fs", "ws", "path"],
+  plugins: [wasmPlugin, umdWrapper(umdWrapperOptions)]
+  // plugins: [dtsPlugin({
+  //   outDir: `./dist/`,
+  //   tsconfig: "tsconfig.json"
+  // })]
+})
