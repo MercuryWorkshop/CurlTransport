@@ -95,7 +95,7 @@ build({
 
 build({
   bundle: true,
-  format: "js",
+  format: "esm",
   entryPoints: [`./src/main.ts`],
   outfile: `./dist/index.js`,
   external: ["fs", "ws", "path"],
