@@ -6,6 +6,12 @@ export class LibcurlClient implements BareTransport {
 
   constructor(options) {
     this.wisp = options.wisp;
+    if (!this.wisp.endsWith("/")) {
+      throw new TypeError("The Wisp URL must end with a trailing forward slash.");
+    }
+    if (!this.wisp.startsWith("ws://") && !this.wisp.startsWith("wss://")) {
+      throw new TypeError("The Wisp URL must use the ws:// or wss:// protocols");
+    }
     this.wasm_url = options.wasm || "libcurl.wasm";
   }
   async init() {

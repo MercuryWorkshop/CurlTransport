@@ -11,3 +11,5 @@ BareMux.SetTransport("CurlMod.LibcurlClient", { wisp: "ws://localhost:8080/wisp"
 ```
 
 to use the libcurl.js backend instead
+
+You must import `dist/index.js` in your service worker, before UV is initialized. 
