@@ -16,7 +16,10 @@ export class LibcurlClient implements BareTransport {
   }
   async init() {
     this.ready = libcurl.ready;
-    if (this.ready) return;
+    if (this.ready) {
+      libcurl.set_websocket(this.wisp);
+      return;
+    };
 
     libcurl.load_wasm(this.wasm_url);
     await new Promise((resolve, reject) => {
