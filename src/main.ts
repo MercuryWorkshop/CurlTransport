@@ -1,8 +1,8 @@
 import { BareHeaders, BareResponse, TransferrableResponse, type BareTransport } from "@mercuryworkshop/bare-mux";
-import { libcurl } from "libcurl.js";
+// @ts-ignore
+import { libcurl } from "libcurl.js/bundled";
 export class LibcurlClient implements BareTransport {
   wisp: string;
-  wasm_url: string;
 
   constructor(options) {
     this.wisp = options.wisp;
@@ -12,20 +12,18 @@ export class LibcurlClient implements BareTransport {
     if (!this.wisp.startsWith("ws://") && !this.wisp.startsWith("wss://")) {
       throw new TypeError("The Wisp URL must use the ws:// or wss:// protocols");
     }
-    this.wasm_url = options.wasm || "libcurl.wasm";
   }
   async init() {
+    libcurl.set_websocket(this.wisp);
     this.ready = libcurl.ready;
     if (this.ready) {
-      libcurl.set_websocket(this.wisp);
-      return;
+      console.log("running libcurl.js v"+libcurl.version.lib);
+      return
     };
 
-    libcurl.load_wasm(this.wasm_url);
     await new Promise((resolve, reject) => {
       libcurl.onload = () => {
         console.log("loaded libcurl.js v"+libcurl.version.lib);
-        libcurl.set_websocket(this.wisp);
         this.ready = true;
         resolve(null);
       }
