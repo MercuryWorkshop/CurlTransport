@@ -1,6 +1,6 @@
 {
   "name": "@mercuryworkshop/libcurl-transport",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "a bare transport that implements end-to-end encryption with libcurl.js and wisp",
   "main": "./dist/index.mjs",
   "keywords": [],
@@ -33,6 +33,9 @@
       "node": {
         "import": "./lib/index.cjs",
         "require": "./lib/index.cjs"
+      },
+      "default": {
+        "types": "./lib/index.d.ts"
       }
     }
   }
