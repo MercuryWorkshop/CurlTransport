@@ -73,7 +73,7 @@ export class LibcurlClient implements BareTransport {
     onmessage: (data: Blob | ArrayBuffer | string) => void,
     onclose: (code: number, reason: string) => void,
     onerror: (error: string) => void,
-  ): (data: Blob | ArrayBuffer | string) => void {
+  ): [ (data: Blob | ArrayBuffer | string) => void, (code: number, reason: string) => void ] {
     let socket = new libcurl.WebSocket(url.toString(), protocols, {
       headers: requestHeaders
     });
@@ -88,8 +88,14 @@ export class LibcurlClient implements BareTransport {
     };
 
     //there's no way to close the websocket in bare-mux?
-    return (data) => {
-      socket.send(data);
-    }
+    // there is now!
+    return [ 
+      (data) => {
+        socket.send(data);
+      },
+      (code, reason) => {
+        socket.close(code, reason)
+      }
+    ]
   }
 }

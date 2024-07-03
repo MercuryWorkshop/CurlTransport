@@ -1,23 +1,25 @@
 {
   "name": "@mercuryworkshop/libcurl-transport",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "a bare transport that implements end-to-end encryption with libcurl.js and wisp",
   "main": "./dist/index.mjs",
   "keywords": [],
   "author": "",
   "type": "module",
   "scripts": {
-    "build": "node esbuild.bundle.mjs; cp dist/index.cjs dist/index.js"
+    "build": "node esbuild.bundle.mjs; cp dist/index.cjs dist/index.js",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "esbuild-plugin-umd-wrapper": "^2.0.0",
-    "libcurl.js": "^0.6.6",
+    "libcurl.js": "^0.6.8",
     "rollup": "^4.12.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "ws": "8.16.0"
   },
   "devDependencies": {
+    "@mercuryworkshop/bare-mux": "^1.1.3",
     "esbuild": "^0.19.11",
     "esbuild-plugin-d.ts": "^1.2.2"
   },
