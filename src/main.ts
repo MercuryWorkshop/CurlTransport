@@ -1,4 +1,4 @@
-import { BareHeaders, BareResponse, TransferrableResponse, type BareTransport } from "@mercuryworkshop/bare-mux";
+import type { BareHeaders, BareResponse, TransferrableResponse, BareTransport } from "@mercuryworkshop/bare-mux";
 // @ts-ignore
 import { libcurl } from "libcurl.js/bundled";
 export default class LibcurlClient implements BareTransport {
