@@ -33,6 +33,9 @@
       "node": {
         "import": "./lib/index.cjs",
         "require": "./lib/index.cjs"
+      },
+      "default": {
+        "types": "./lib/index.d.ts"
       }
     }
   }
