@@ -12,8 +12,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       libcurl.js:
-        specifier: ^0.6.9
-        version: 0.6.9
+        specifier: ^0.6.10
+        version: 0.6.10
       rollup:
         specifier: ^4.12.0
         version: 4.18.1
@@ -23,9 +23,6 @@ importers:
       rollup-plugin-typescript2:
         specifier: ^0.36.0
         version: 0.36.0(rollup@4.18.1)(typescript@5.5.3)
-      ws:
-        specifier: 8.16.0
-        version: 8.16.0
     devDependencies:
       '@mercuryworkshop/bare-mux':
         specifier: ^2.0.1
@@ -356,8 +353,8 @@ packages:
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
-  libcurl.js@0.6.9:
-    resolution: {integrity: sha512-xelI8feZv5YyB3ybwYlvXnt+mGALf4sXoBvsxHG1+KSU/Qug/5822kn4tKEIVby1L6weE4Nwkq3JS9cCxUM7JA==}
+  libcurl.js@0.6.10:
+    resolution: {integrity: sha512-GDyxCRi7+R7XFhcCRFAsNYxg3x91LiwiBISo+pWfUXfgO45J/9ZWcHqjKQg8/FbWHRkV1wwSCyPOZ8pLlbdivg==}
 
   locate-path@5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
@@ -452,18 +449,6 @@ packages:
   universalify@2.0.1:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
-
-  ws@8.16.0:
-    resolution: {integrity: sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
 
 snapshots:
 
@@ -700,7 +685,7 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  libcurl.js@0.6.9: {}
+  libcurl.js@0.6.10: {}
 
   locate-path@5.0.0:
     dependencies:
@@ -800,5 +785,3 @@ snapshots:
   undici-types@5.26.5: {}
 
   universalify@2.0.1: {}
-
-  ws@8.16.0: {}

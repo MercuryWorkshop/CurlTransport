@@ -77,7 +77,7 @@ build({
   entryPoints: [`./src/main.ts`],
   outfile: `./dist/index.mjs`,
   plugins: [wasmPlugin],
-  external: ["fs", "ws", "path"],
+  external: ["fs", "path"],
 })
 
 build({
@@ -85,7 +85,7 @@ build({
   format: "cjs",
   entryPoints: [`./src/main.ts`],
   outfile: `./dist/index.cjs`,
-  external: ["fs", "ws", "path"],
+  external: ["fs", "path"],
   plugins: [wasmPlugin, umdWrapper(umdWrapperOptions)]
   // plugins: [dtsPlugin({
   //   outDir: `./dist/`,
