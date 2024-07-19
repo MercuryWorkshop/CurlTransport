@@ -3,16 +3,25 @@ import type { BareHeaders, BareResponse, TransferrableResponse, BareTransport } 
 import { libcurl } from "libcurl.js/bundled";
 export default class LibcurlClient implements BareTransport {
   wisp: string;
+  proxy: string;
 
   constructor(options) {
     this.wisp = options.wisp;
+    this.proxy = options.proxy;
     if (!this.wisp.endsWith("/")) {
       throw new TypeError("The Wisp URL must end with a trailing forward slash.");
     }
     if (!this.wisp.startsWith("ws://") && !this.wisp.startsWith("wss://")) {
       throw new TypeError("The Wisp URL must use the ws:// or wss:// protocols");
     }
+    if (typeof options.proxy === "string" || options.proxy instanceof String) {
+      let protocol = new URL(options.proxy).protocol;
+      if (!["socks5h:", "socks4a:", "http:"].includes(protocol)) {
+        throw new TypeError("Only socks5h, socks4a, and http proxies are supported.");
+      }
+    }
   }
+
   async init() {
     libcurl.set_websocket(this.wisp);
     this.ready = libcurl.ready;
@@ -43,7 +52,9 @@ export default class LibcurlClient implements BareTransport {
       method,
       headers: headers,
       body,
-      redirect: "manual"
+      redirect: "manual",
+      signal: signal,
+      proxy: this.proxy
     })
 
     let respheaders = {};
