@@ -77,7 +77,6 @@ export default class LibcurlClient implements BareTransport {
 
   connect(
     url: URL,
-    origin: string,
     protocols: string[],
     requestHeaders: BareHeaders,
     onopen: (protocol: string) => void,
