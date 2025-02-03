@@ -1,15 +1,10 @@
+# CurlTransport
 A bare-module for implementing end to end encryption with libcurl.js
 
-# How to use
-In an ultraviolet app with bare-mux installed, you'll see a line like
+# Usage
+Here is an example of using CurlTransport:
 ```js
-BareMux.SetTransport("EpxMod.EpoxyClient", { wisp: "ws://localhost:8080/wisp" });
+import { BareMuxConnection } from "@mercuryworkshop/bare-mux";
+const conn = new BareMuxConnection("/path/to/baremux/worker.js");
+await conn.setTransport("/path/to/curltransport/index.mjs", [{ wisp: "wss://wisp.mercurywork.shop/" }]);
 ```
-Simply replace it with
-```js
-BareMux.SetTransport("CurlMod.LibcurlClient", { wisp: "ws://localhost:8080/wisp" });
-```
-
-to use the libcurl.js backend instead
-
-You must import `dist/index.js` in your service worker, before UV is initialized. 

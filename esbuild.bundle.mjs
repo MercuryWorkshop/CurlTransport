@@ -78,6 +78,7 @@ build({
   outfile: `./dist/index.mjs`,
   plugins: [wasmPlugin],
   external: ["fs", "path"],
+  logLevel: "info",
 })
 
 build({
@@ -86,7 +87,8 @@ build({
   entryPoints: [`./src/main.ts`],
   outfile: `./dist/index.cjs`,
   external: ["fs", "path"],
-  plugins: [wasmPlugin, umdWrapper(umdWrapperOptions)]
+  plugins: [wasmPlugin, umdWrapper(umdWrapperOptions)],
+  logLevel: "info",
   // plugins: [dtsPlugin({
   //   outDir: `./dist/`,
   //   tsconfig: "tsconfig.json"
