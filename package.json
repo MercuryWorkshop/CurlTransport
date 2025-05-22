@@ -1,10 +1,11 @@
 {
   "name": "@mercuryworkshop/libcurl-transport",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "a bare transport that implements end-to-end encryption with libcurl.js and wisp",
   "main": "./dist/index.mjs",
   "keywords": [],
-  "author": "",
+  "author": "ading2210",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "scripts": {
     "build": "node esbuild.bundle.mjs; cp dist/index.cjs dist/index.js",

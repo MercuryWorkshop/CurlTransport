@@ -4,15 +4,20 @@ import { libcurl } from "libcurl.js/bundled";
 export default class LibcurlClient implements BareTransport {
   wisp: string;
   proxy: string;
+  transport: string;
+  session: any;
+  connections: Array<number>;
 
   constructor(options) {
-    this.wisp = options.wisp;
+    this.wisp = options.wisp ?? options.websocket;
+    this.transport = options.transport;
     this.proxy = options.proxy;
+    this.connections = options.connections;
     if (!this.wisp.endsWith("/")) {
-      throw new TypeError("The Wisp URL must end with a trailing forward slash.");
+      throw new TypeError("The Websocket URL must end with a trailing forward slash.");
     }
     if (!this.wisp.startsWith("ws://") && !this.wisp.startsWith("wss://")) {
-      throw new TypeError("The Wisp URL must use the ws:// or wss:// protocols");
+      throw new TypeError("The Websocket URL must use the ws:// or wss:// protocols.");
     }
     if (typeof options.proxy === "string" || options.proxy instanceof String) {
       let protocol = new URL(options.proxy).protocol;
@@ -23,7 +28,16 @@ export default class LibcurlClient implements BareTransport {
   }
 
   async init() {
+    if (this.transport)
+      libcurl.transport = this.transport;
     libcurl.set_websocket(this.wisp);
+    this.session = new libcurl.HTTPSession({
+      proxy: this.proxy
+    });
+    
+    if (this.connections)
+      this.session.set_connections(...this.connections);
+
     this.ready = libcurl.ready;
     if (this.ready) {
       console.log("running libcurl.js v"+libcurl.version.lib);
@@ -48,13 +62,12 @@ export default class LibcurlClient implements BareTransport {
     headers: BareHeaders,
     signal: AbortSignal | undefined
   ): Promise<TransferrableResponse> {
-    let payload = await libcurl.fetch(remote.href, {
+    let payload = await this.session.fetch(remote.href, {
       method,
       headers: headers,
       body,
       redirect: "manual",
-      signal: signal,
-      proxy: this.proxy
+      signal: signal
     })
 
     let respheaders = {};
@@ -97,8 +110,6 @@ export default class LibcurlClient implements BareTransport {
       onmessage(event.data);
     };
 
-    //there's no way to close the websocket in bare-mux?
-    // there is now!
     return [ 
       (data) => {
         socket.send(data);
