@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       libcurl.js:
-        specifier: ^0.7.1
-        version: 0.7.1
+        specifier: ^0.7.3
+        version: 0.7.3
     devDependencies:
       '@mercuryworkshop/bare-mux':
         specifier: ^2.1.7
@@ -241,8 +241,8 @@ packages:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
     engines: {node: '>=8'}
 
-  libcurl.js@0.7.1:
-    resolution: {integrity: sha512-0wZSgCj0wqc3n/W8Lrsagm5E5FXEj41hvQF6bp5o4m3kutxAV2XRHuhudvVOwKxMJqRb4VlHxuUhQvkFAVUwQw==}
+  libcurl.js@0.7.3:
+    resolution: {integrity: sha512-svlEs42mmKocPKVsl+EViVPb/DuNRUecO+Fs7I3LOmu6YHfoBAfhTSmyCRg57H7QEFHgafZOf/TkA24s/i2AKg==}
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -443,7 +443,7 @@ snapshots:
 
   is-fullwidth-code-point@3.0.0: {}
 
-  libcurl.js@0.7.1: {}
+  libcurl.js@0.7.3: {}
 
   lodash.merge@4.6.2: {}
 
