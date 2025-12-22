@@ -1,30 +1,40 @@
 # CurlTransport
-This is a transport for [bare-mux](https://github.com/MercuryWorkshop/bare-mux) using [libcurl.js](https://github.com/ading2210/libcurl.js). It allows you to encrypt the traffic on your web proxy using TLS and Wisp. 
+This is a [proxy-transports](https://github.com/MercuryWorkshop/proxy-transports) transport using [libcurl.js](https://github.com/ading2210/libcurl.js). It allows you to encrypt the traffic on your web proxy using TLS and Wisp. 
 
 ## Usage:
 Here is a basic example of using CurlTransport. The Wisp proxy server is specified in the `websocket` option. 
 ```js
-import { BareMuxConnection } from "@mercuryworkshop/bare-mux";
-const conn = new BareMuxConnection("/path/to/baremux/worker.js");
-await conn.setTransport("/path/to/curltransport/index.mjs", [{ websocket: "wss://example.com/wisp/" }]);
+import { LibcurlClient } from "@mercuryworkshop/libcurl-transport";
+let client = new LibcurlClient({ websocket: "wss://example.com/wisp/" });
+
+// pass to proxy
+```
+
+You can also use the non-esm build
+```html
+<script src="https://unpkg.com/@mercuryworkshop/libcurl-transport@2/dist/index.js"></script>
+<script>
+  let client = new CurlMod.LibcurlClient({ websocket: "wss://example.com/wisp/" });
+</script>
 ```
 
 If you would like to use wsproxy instead of Wisp, set `transport: "wsproxy"`. Wsproxy is similar to Wisp, but each TCP connection exists as a separate Websocket instead of being multiplexed. 
 
 ```js
-await conn.setTransport("/path/to/curltransport/index.mjs", [{ websocket: "wss://example.com/wsproxy/", transport: "wsproxy" }]);
+import { LibcurlClient } from "@mercuryworkshop/libcurl-transport";
+let client = new LibcurlClient({ websocket: "wss://example.com/wisp/", transport: "wsproxy" });
 ```
 
 You can also set the max number of open connections for libcurl.js. The `connections` option is passed through to `HTTPSession.set_connections` in libcurl.js. It is an array of 3 integers, where the first is the hard limit of active connections (default 60), the second is limit for the connection cache (default 50), and the third is the max connections per host (default 6).
 ```js
-conn.setTransport("/libcurl/index.mjs", [{ websocket: "wss://example.com/wsproxy/", connections: [30, 20, 1] } ])
+let client = new LibcurlClient({ websocket: "wss://example.com/wsproxy/", connections: [30, 20, 1] })
 ```
 
 ## Copyright:
 This package is licensed under the GNU AGPL v3.
 
 ```
-CurlTransport - An encrypted bare-mux transport for web proxies using libcurl.js.
+CurlTransport - An encrypted transport for web proxies using libcurl.js.
 Copyright (C) 2025 Mercury Workshop
 
 This program is free software: you can redistribute it and/or modify

@@ -12,9 +12,9 @@ importers:
         specifier: ^0.7.4
         version: 0.7.4
     devDependencies:
-      '@mercuryworkshop/bare-mux':
-        specifier: ^2.1.7
-        version: 2.1.7
+      '@mercuryworkshop/proxy-transports':
+        specifier: ^1.0.2
+        version: 1.0.2
       esbuild:
         specifier: ^0.24.2
         version: 0.24.2
@@ -177,8 +177,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@mercuryworkshop/bare-mux@2.1.7':
-    resolution: {integrity: sha512-BUamyc7jsIFbWQVVWjVjaD+Wot77EPwolkrbP3UuIs6QeHR1RY52+IR2fq3GkRAbOOrAZNT7EgZSsupkh1NowQ==}
+  '@mercuryworkshop/proxy-transports@1.0.2':
+    resolution: {integrity: sha512-zgD+JMYNSx8LxVLWwGPPVnoDHjoh1GqqwUJIjhIwCwhy+Z7g+MhmiTJvCcRPAo7qXXbqJwIrpBJduRSOrjMV7g==}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -365,7 +365,7 @@ snapshots:
   '@esbuild/win32-x64@0.24.2':
     optional: true
 
-  '@mercuryworkshop/bare-mux@2.1.7': {}
+  '@mercuryworkshop/proxy-transports@1.0.2': {}
 
   ansi-regex@5.0.1: {}
 
