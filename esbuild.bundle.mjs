@@ -1,4 +1,4 @@
-// import { dtsPlugin } from "esbuild-plugin-d.ts";
+import { dtsPlugin } from "esbuild-plugin-d.ts";
 import { build } from "esbuild";
 import path from 'node:path'
 import fs from 'node:fs'
@@ -89,8 +89,8 @@ build({
   external: ["fs", "path"],
   plugins: [wasmPlugin, umdWrapper(umdWrapperOptions)],
   logLevel: "info",
-  // plugins: [dtsPlugin({
-  //   outDir: `./dist/`,
-  //   tsconfig: "tsconfig.json"
-  // })]
+  plugins: [dtsPlugin({
+    outDir: `./dist/`,
+    tsconfig: "tsconfig.json"
+  })]
 })
