@@ -81,16 +81,21 @@ build({
   logLevel: "info",
 })
 
-build({
+await build({
   bundle: true,
   format: "cjs",
-  entryPoints: [`./src/main.ts`],
-  outfile: `./dist/index.cjs`,
+  entryPoints: { index: './src/main.ts' },
+  outdir: `./dist/`,
   external: ["fs", "path"],
-  plugins: [wasmPlugin, umdWrapper(umdWrapperOptions)],
   logLevel: "info",
-  plugins: [dtsPlugin({
-    outDir: `./dist/`,
-    tsconfig: "tsconfig.json"
-  })]
+  plugins: [
+    wasmPlugin,
+    umdWrapper(umdWrapperOptions),
+    dtsPlugin({
+      outDir: `./dist/`,
+      tsconfig: "tsconfig.json"
+    })
+  ]
 })
+
+fs.renameSync('./dist/main.d.ts', './dist/index.d.ts')
