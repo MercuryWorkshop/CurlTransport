@@ -1,6 +1,6 @@
 {
   "name": "@mercuryworkshop/libcurl-transport",
-  "version": "2.0",
+  "version": "2.0.0",
   "description": "a proxy-transport that implements end-to-end encryption with libcurl.js and wisp",
   "main": "./dist/index.mjs",
   "keywords": [],
