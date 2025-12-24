@@ -14,7 +14,7 @@ You can also use the non-esm build
 ```html
 <script src="https://unpkg.com/@mercuryworkshop/libcurl-transport@2/dist/index.js"></script>
 <script>
-  let client = new CurlMod.LibcurlClient({ websocket: "wss://example.com/wisp/" });
+  let client = new LibcurlTransport.LibcurlClient({ websocket: "wss://example.com/wisp/" });
 </script>
 ```
 

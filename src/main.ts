@@ -146,3 +146,5 @@ export default class LibcurlClient implements ProxyTransport {
     ];
   }
 }
+
+export { LibcurlClient };

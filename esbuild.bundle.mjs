@@ -5,7 +5,7 @@ import fs from 'node:fs'
 import { umdWrapper } from "esbuild-plugin-umd-wrapper";
 
 const umdWrapperOptions = {
-  libraryName: "CurlMod", // default is unset
+  libraryName: "LibcurlTransport", // default is unset
   external: "inherit", // <= default
   amdLoaderName: "define" // <= default
 }
