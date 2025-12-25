@@ -9,7 +9,7 @@
   "type": "module",
   "repository": {
 		"type": "git",
-		"url": "git+https://github.com/MercuryWorkshop/CurlTransport.git"
+		"url": "git+https://github.com/MercuryWorkshop/libcurl-transport.git"
 	},
   "scripts": {
     "build": "node esbuild.bundle.mjs",
