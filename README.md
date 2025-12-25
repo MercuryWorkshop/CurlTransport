@@ -1,4 +1,4 @@
-# CurlTransport
+# libcurl-transport
 This is a [proxy-transports](https://github.com/MercuryWorkshop/proxy-transports) transport using [libcurl.js](https://github.com/ading2210/libcurl.js). It allows you to encrypt the traffic on your web proxy using TLS and Wisp. 
 
 ## Usage:
